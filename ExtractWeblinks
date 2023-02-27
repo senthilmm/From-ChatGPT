@@ -21,3 +21,27 @@ with open('unique_urls.txt', 'w') as file:
                     # Write the unique URL to the text file and add it to the set
                     file.write(cell.hyperlink.target + '\n')
                     unique_urls.add(cell.hyperlink.target)
+
+import openpyxl
+
+# Open the Excel file
+wb = openpyxl.load_workbook('example.xlsx')
+ws = wb.active
+
+# Create a set to store unique URLs
+unique_urls = set()
+
+# Open a text file to write the unique URLs to
+with open('unique_urls.txt', 'w') as file:
+
+    # Loop through each cell in column 3
+    for cell in ws.iter_cols(min_col=3, max_col=3):
+        for row in cell:
+            if row.hyperlink is not None:
+
+                # Check if the URL is already in the set
+                if row.hyperlink.target not in unique_urls:
+
+                    # Write the unique URL to the text file and add it to the set
+                    file.write(row.hyperlink.target + '\n')
+                    unique_urls.add(row.hyperlink.target)
