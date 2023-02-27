@@ -1,0 +1,23 @@
+import openpyxl
+
+# Open the Excel file
+wb = openpyxl.load_workbook('example.xlsx')
+ws = wb.active
+
+# Create a set to store unique URLs
+unique_urls = set()
+
+# Open a text file to write the unique URLs to
+with open('unique_urls.txt', 'w') as file:
+
+    # Loop through each cell in the worksheet
+    for row in ws.iter_rows():
+        for cell in row:
+            if cell.hyperlink is not None:
+
+                # Check if the URL is already in the set
+                if cell.hyperlink.target not in unique_urls:
+
+                    # Write the unique URL to the text file and add it to the set
+                    file.write(cell.hyperlink.target + '\n')
+                    unique_urls.add(cell.hyperlink.target)
